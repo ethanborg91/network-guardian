@@ -1,0 +1,25 @@
+version: "3.9"
+
+services:
+  api:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    container_name: networkguardian-backend
+    environment:
+      - SCAN_INTERVAL=${SCAN_INTERVAL}
+    volumes:
+      - ./backend/devices.db:/app/devices.db
+    network_mode: host # Pi-friendly networking for ARP/Scapy
+    restart: unless-stopped
+
+  dashboard:
+    build:
+      context: .
+      dockerfile: dashboard/Dockerfile
+    container_name: networkguardian-dashboard
+    ports:
+      - "3000:80"
+    depends_on:
+      - api
+    restart: unless-stopped
