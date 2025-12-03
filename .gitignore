@@ -24,5 +24,6 @@ yarn-error.log*
 
 /backend/venv
 /backend/devices.db
+/backend/scanner/test_devices.db
 
 .env
